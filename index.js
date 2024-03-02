@@ -1,16 +1,37 @@
 const { Client } = require("@notionhq/client");
 
 const SECRET_KEY = process.env.SECRET_KEY;
-const DATABASE_ID = process.env.DATABASE_ID;
 
 let client = new Client({auth: SECRET_KEY});
 
-const main = async () => {
+const recordPlan = async (today, plan) => {
+    await client.blocks.children.append(
+        {
+            block_id: "83d5d2a8ce664f29b5bffdae4be796be",
+            after: "5b3e6e5c0ce34bbebc67087683e12cc5",
+            children: [
+                {
+                    bulleted_list_item: {
+                        rich_text: [
+                            {
+                                text: {
+                                    content: `${today} |->| 我们要：${plan}。`
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    )
+}
+
+const retrieveRaws = async () => {
     let raws = [];
     let cursor = null;
     do {
         let args = {
-            database_id: DATABASE_ID,
+            database_id: "6ced42aaeee84f5b9c57ce1ffe4a0e26",
             page_size: 50,
             filter: {
                 and: [
@@ -36,19 +57,27 @@ const main = async () => {
         cursor = db.next_cursor;
         raws.push(...db.results);
     } while (cursor != null)
+    return raws;
+};
 
-    let randomIndex = Math.floor(Math.random() * raws.length);
-    let todayPlan = raws[randomIndex];
+const main = async () => {
+    let raws = await retrieveRaws();
 
+    let todayPlan = raws[Math.floor(Math.random() * raws.length)];
+
+    let today = new Date().toISOString().split('T')[0];
     await client.pages.update({
         page_id: todayPlan.id,
         properties: {
             Done: {checkbox: true},
-            "Pick Date": {date: {start: new Date().toISOString().split('T')[0]}}
+            "Pick Date": {date: {start: today}}
         }
     });
 
-    console.log(`🌈🌈🌈 today plan is: ${todayPlan.properties.Plan.title[0].plain_text} 🌈🌈🌈`)
+    let plan = todayPlan.properties.Plan.title[0].plain_text;
+    await recordPlan(today, plan);
+
+    console.log(`🌈🌈🌈 today plan is: ${plan} 🌈🌈🌈`)
 }
 
 main();
