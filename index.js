@@ -43,7 +43,8 @@ const main = async () => {
     await client.pages.update({
         page_id: todayPlan.id,
         properties: {
-            Done: {checkbox: true}
+            Done: {checkbox: true},
+            "Pick Date": {date: {start: new Date().toISOString().split('T')[0]}}
         }
     });
 
