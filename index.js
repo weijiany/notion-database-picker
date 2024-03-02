@@ -66,18 +66,9 @@ const main = async () => {
     let todayPlan = raws[Math.floor(Math.random() * raws.length)];
 
     let today = new Date().toISOString().split('T')[0];
-    await client.pages.update({
-        page_id: todayPlan.id,
-        properties: {
-            Done: {checkbox: true},
-            "Pick Date": {date: {start: today}}
-        }
-    });
-
     let plan = todayPlan.properties.Plan.title[0].plain_text;
     await recordPlan(today, plan);
-
-    console.log(`🌈🌈🌈 today plan is: ${plan} 🌈🌈🌈`)
+    console.log(`🌈🌈🌈 ${today} plan is: ${plan} 🌈🌈🌈`)
 }
 
 main();
