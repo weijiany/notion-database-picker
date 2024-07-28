@@ -9,7 +9,7 @@ env:
   SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
 jobs:
-  Publish:
+  Record:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
