@@ -12,7 +12,7 @@ const config = {
         {
             name: "Work",
             total: 4,
-            work: 2,
+            work: 3,
         },
         {
             name: "Nightly",
