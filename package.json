@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "record-work": "node index.js"
+    "record-work": "node work-recorder.js"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",
