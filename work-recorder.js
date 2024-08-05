@@ -37,7 +37,6 @@ const retrieveMultiSelectFieldName2Id = (propertyName) =>
 const typeFieldOf = async (date) => {
     let name2Id = await retrieveMultiSelectFieldName2Id("Type");
     let diffDays = Math.floor(date
-        .setZone("Asia/Shanghai")
         .set({
             hour: 0,
             minute: 0,
