@@ -7,19 +7,18 @@ let client = new Client({auth: SECRET_KEY});
 
 const DATABASE_ID = "7c22cad0ec4f4940804133bf25369ee7";
 const config = {
-    startDate: DateTime.fromISO("2024-07-23T00:00:00"),
+    startDate: DateTime.fromISO("2024-12-31T00:00:00"),
     loops: [
         {
             name: "Work",
             total: 4,
             work: 3,
         },
-        {
-            name: "Nightly",
-            total: 12,
-            work: 1
-        }
-
+        // {
+        //     name: "Nightly",
+        //     total: 12,
+        //     work: 1
+        // }
     ],
 };
 
